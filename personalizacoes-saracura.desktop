@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Exec=gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM' && \
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 36 && \
+gsettings set org.gnome.shell.favorite-apps "['firefox.desktop', 'org.gnome.Terminal.desktop', 'onlyoffice-desktopeditors.desktop', 'google-chrome.desktop', 'anydesk.desktop', 'gimp.desktop', 'spotify.desktop']" && \
+gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/logo_PP_saracura_TROCA.png' && \
+gsettings set org.gnome.desktop.screensaver picture-uri 'file:///usr/share/backgrounds/logo_PP_saracura_TROCA.png' && \
+gsettings set org.gnome.desktop.session idle-delay 1200 && \
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'suspend' && \
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 14400
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=Personalizações Saracura
+Comment=Dock embaixo, ícones menores, favoritos, wallpaper, tela apaga em 20min e suspende por inatividade em 4h
