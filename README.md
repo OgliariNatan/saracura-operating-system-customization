@@ -178,8 +178,8 @@ As configurações do dock serão aplicadas automaticamente através do arquivo 
 /usr/share/backgrounds/saracura/
 └── wallpaper.jpg
 
-/usr/share/plymouth/themes/ubuntu-logo/
-└── ubuntu-logo.png
+/usr/share/plymouth/themes/spinner/
+└── watermark.png
 ```
 
 ## 🏁 Geração da ISO
