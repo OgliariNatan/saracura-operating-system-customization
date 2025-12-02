@@ -29,4 +29,4 @@ apt install htop -y && \
 apt install openssh-server -y && \
 
 # pacotes para  drivers de impressoras
-apt install printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds -y && \
+apt install printer-driver-all foomatic-db-engine hp-ppd openprinting-ppds -y 

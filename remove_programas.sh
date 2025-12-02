@@ -12,5 +12,5 @@ apt remove --purge remmina -y && \
   language-pack-gnome-fr-base language-pack-gnome-it language-pack-gnome-it-base \
   language-pack-gnome-ru language-pack-it language-pack-it-base  language-pack-ru \
   language-pack-gnome-ru-base language-pack-gnome-zh-hans language-pack-gnome-zh-hans-base \
-  language-pack-ru-base language-pack-zh-hans language-pack-zh-hans-base -y && \
+  language-pack-ru-base language-pack-zh-hans language-pack-zh-hans-base -y 
 
