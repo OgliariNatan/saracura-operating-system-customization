@@ -178,6 +178,13 @@ As configurações do dock serão aplicadas automaticamente através do arquivo 
 └── watermark.png
 ```
 
+## Linguagem padrão 
+
+altere o arquivo ``` /etc/default/locale ```
+``` bash
+LANG=pt_BR.UTF-8
+```
+
 ## 🏁 Geração da ISO
 
 1. No Cubic, após todas as personalizações, clique em "Next"
