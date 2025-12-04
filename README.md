@@ -2,6 +2,9 @@
 
 Personalização customizada do Ubuntu 24.04 LTS usando Cubic para criar uma ISO com aplicações e configurações personalizadas.
 
+No mais a mais, digo que é um processo datalhista e demorado. Possui inumeras formas de chegar a um denominador comum, estes passos em sua grande maioria são a subistituição de arquivos mantendo os nomes dos originais, acredito que não seria a melhor maneira levando em considerações conhecementos sobre o sistema operacional, o ideal seria manter os originais e adicionar os customizados e alterar os arquivos de configurações, no entento, é complexo e sensível a erros.
+Ressalto que as aplicações não estão visiveis na instalação do sistema, será aplicado após a reinicialização, pois houve algumas mudanção no Ubuntu e supostamente a equipe do CUBIC ainda não ajustou.
+
 ## 📋 Índice
 
 - [Pré-requisitos](#pré-requisitos)
@@ -14,12 +17,6 @@ Personalização customizada do Ubuntu 24.04 LTS usando Cubic para criar uma ISO
 - [Autostart de Personalizações](#autostart-de-personalizações)
 - [Geração da ISO](#geração-da-iso)
 
-## 🔧 Pré-requisitos
-
-- Ubuntu 24.04 LTS (ou derivado)
-- Acesso root/sudo
-- ISO original do Ubuntu 24.04 LTS
-- Espaço em disco: mínimo 20GB livres
 
 ## 📦 Instalação do Cubic
 
@@ -32,75 +29,56 @@ sudo apt install --no-install-recommends cubic
 
 ## 🚀 Processo de Customização
 
-### 1. Iniciar o Cubic
+### 1. ISO Ubuntu 24.04
+   Baixe a iso do Ubuntu 24.04
+
+### 2. Iniciar o Cubic
 
 1. Abra o Cubic
 2. Selecione a ISO original do Ubuntu 24.04
 3. Escolha um diretório de trabalho
 4. Aguarde a extração dos arquivos
 
-### 2. Entrar no Ambiente Chroot
+### 3. Entrar no Ambiente Chroot
 
 Quando o terminal do Cubic abrir, você estará dentro do ambiente chroot da ISO.
 
-## 🗑️ Remoção de Aplicações
-
-### Remover LibreOffice
+#### Atualize o OS
 
 ```bash
-sudo apt remove --purge libreoffice* -y
-sudo apt autoremove -y
-sudo apt autoclean
+chmod +x /root/atualiza.sh && \
+/root/./atualiza.sh
 ```
 
-## 📥 Instalação de Aplicações
-
-### 1. Atualizar Sistema
+#### 🗑️ Remoção de Aplicações
+Para remover aplicações rode o scripty **remove_programas.sh**
 
 ```bash
-apt update
-apt upgrade -y
+chmod +x /root/remove_programas.sh && \
+/root/./remove_programas.sh
 ```
 
-### 2. Instalar OnlyOffice Desktop Editors
+atualize o OS
+```bash
+/root/./atualiza.sh
+```
+
+
+#### 📥 Instalação de Aplicações
+
+##### 3.1. Atualizar Sistema
 
 ```bash
-sudo apt install apt-transport-https
-mkdir -p -m 700 ~/.gnupg
-gpg --no-default-keyring --keyring gnupg-ring:/tmp/onlyoffice.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys CB2DE8E5
-chmod 644 /tmp/onlyoffice.gpg
-sudo chown root:root /tmp/onlyoffice.gpg
-sudo mv /tmp/onlyoffice.gpg /usr/share/keyrings/onlyoffice.gpg
-
-echo 'deb [signed-by=/usr/share/keyrings/onlyoffice.gpg] https://download.onlyoffice.com/repo/debian squeeze main' | sudo tee /etc/apt/sources.list.d/onlyoffice.list
-
-apt update
-apt install onlyoffice-desktopeditors -y
+/root/./atualiza.sh
 ```
 
-### 3. Instalar GIMP
+##### 3.2. 🚨 Para instalar app's rode o scripty
 
 ```bash
-apt install gimp -y
+chmod +x /root/install_programas.sh && \
+/root/./install_programas.sh
 ```
 
-### 4. Instalar Spotify
-
-```bash
-curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-
-apt update
-apt install spotify-client -y
-```
-
-### 5. Instalar Google Chrome
-
-```bash
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-apt install ./google-chrome-stable_current_amd64.deb -y
-rm google-chrome-stable_current_amd64.deb
-```
 
 ### 6. Instalar AnyDesk
 
@@ -120,11 +98,9 @@ apt install anydesk -y
 2. Substitua o arquivo watermark.png
 
 ```bash
-# Backup do logo original
-cp /usr/share/plymouth/themes/spinner/watermark.png /usr/share/plymouth/themes/spinner/watermark.png.bak
 
 # Copie seu logo personalizado
-cp /caminho/para/seu/logo.png /usr/share/plymouth/themes/spinner/watermark.png
+cp /root/logo.png /usr/share/plymouth/themes/spinner/watermark.png
 
 # Atualize o initramfs
 update-initramfs -u
@@ -142,6 +118,26 @@ mkdir -p /usr/share/backgrounds/saracura/
 cp /caminho/para/wallpaper.jpg /usr/share/backgrounds/saracura/wallpaper.jpg
 
 ```
+
+Exemplo: 
+
+```xml
+   
+   .....
+   <wallpaper>
+     <name>Ogliari</name>
+     <filename>/usr/share/backgrounds/logo_cinza.png</filename>
+     <options>zoom</options>
+     <pcolor>#000000</pcolor>
+     <scolor>#000000</scolor>
+     <shade_type>solid</shade_type>
+   </wallpaper>
+</wallpapers>
+``` 
+
+
+Adicionar o papel de parede as arquivo ``` /usr/share/gnome-background-properties/noble-wallpapers.xml``` 
+
 
 ### Configuração será aplicada automaticamente
 
