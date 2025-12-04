@@ -183,20 +183,20 @@ As configurações do dock serão aplicadas automaticamente através do arquivo 
 1. No Cubic, após todas as personalizações, clique em "Next"
 2. Configure as informações da ISO:
    - Nome: Saracura OS
-   - Versão: 24.04
+   - Versão: <Escolha_uma>
    - Descrição personalizada
 3. Gere a ISO
 4. Teste a ISO em máquina virtual antes de usar em produção
 
 ## ✅ Checklist de Verificação
 
-- [ ] LibreOffice removido
-- [ ] OnlyOffice instalado
-- [ ] GIMP instalado
+- [x] LibreOffice removido
+- [x] OnlyOffice instalado
+- [x] GIMP instalado
 - [ ] Spotify instalado
-- [ ] Google Chrome instalado
+- [x] Google Chrome instalado
 - [ ] AnyDesk instalado
-- [ ] Logo de inicialização personalizado
+- [x] Logo de inicialização personalizado
 - [ ] Papel de parede configurado
 - [ ] Dock posicionado corretamente
 - [ ] Autostart configurado

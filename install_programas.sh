@@ -8,6 +8,7 @@
 echo "==========================================="
 echo "=== Iniciando a Instalacao de Programas ==="
 echo "============Aguarde......=================="
+echo "============@Ogliarinatan=================="
 echo "==========================================="
 apt install tuxpaint -y && \
 apt install vlc -y && \
