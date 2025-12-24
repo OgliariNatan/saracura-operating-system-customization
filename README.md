@@ -2,8 +2,9 @@
 
 Personalização customizada do Ubuntu 24.04 LTS usando Cubic para criar uma ISO com aplicações e configurações personalizadas.
 
-No mais a mais, digo que é um processo datalhista e demorado. Possui inumeras formas de chegar a um denominador comum, estes passos em sua grande maioria são a subistituição de arquivos mantendo os nomes dos originais, acredito que não seria a melhor maneira levando em considerações conhecementos sobre o sistema operacional, o ideal seria manter os originais e adicionar os customizados e alterar os arquivos de configurações, no entento, é complexo e sensível a erros.
+No mais a mais, digo que é um processo datalhista e demorado. Possui inúmeras formas de chegar a um denominador comum, estes passos em sua grande maioria são a subistituição de arquivos mantendo os nomes dos originais, acredito que não seria a melhor maneira levando em considerações conhecementos sobre o sistema operacional, o ideal seria manter os originais e adicionar os customizados e alterar os arquivos de configurações, no entanto, é complexo e sensível a erros.
 Ressalto que as aplicações não estão visiveis na instalação do sistema, será aplicado após a reinicialização, pois houve algumas mudanção no Ubuntu e supostamente a equipe do CUBIC ainda não ajustou.
+Irei configurar o ambiente KDE Plasma, em vez do tradicional GNOME.
 
 ## 📋 Índice
 
@@ -77,17 +78,6 @@ atualize o OS
 ```bash
 chmod +x /root/install_programas.sh && \
 /root/./install_programas.sh
-```
-
-
-### 6. Instalar AnyDesk
-
-```bash
-wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add -
-echo "deb http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk-stable.list
-
-apt update
-apt install anydesk -y
 ```
 
 ## 🎨 Personalização Visual
