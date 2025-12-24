@@ -20,6 +20,11 @@ apt install htop -y && \
 apt install openssh-server -y && \
 
 
+echo "KDE Plasma" &&\
+apt install kde-full -y && \
+apt install kdeconect -y && \
+# =========================
+
 echo "++++ANYDESK ++++" && \
 curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY| gpg --dearmor -o /etc/apt/trusted.gpg.d/anydesk.gpg && \
 echo "deb http://deb.anydesk.com/ all main" | tee /etc/apt/sources.list.d/anydesk-stable.list && \
