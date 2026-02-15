@@ -20,10 +20,13 @@ apt install htop -y && \
 apt install openssh-server -y && \
 
 
-echo "KDE Plasma" &&\
+echo "+++KDE Plasma+++" &&\
 apt install kde-full -y && \
 apt install kdeconect -y && \
 # =========================
+
+echo "+++SDDM THEME ++++" && \
+apt install sddm -y && \
 
 echo "++++ANYDESK ++++" && \
 curl -fsSL https://keys.anydesk.com/repos/DEB-GPG-KEY| gpg --dearmor -o /etc/apt/trusted.gpg.d/anydesk.gpg && \
@@ -64,6 +67,11 @@ wget https://zoom.us/client/latest/zoom_amd64.deb -O zoom.deb && \
 apt install ./zoom.deb -y && \
 apt install -f -y && \
 rm zoom.deb && \
+
+
+# INSTALAR O ASSINADOR DIGITAL DO SERPRO
+echo "++++ASSINADOR DIGITAL DO SERPRO ++++" && \
+curl -fsSL https://assinadorserpro.estaleiro.serpro.gov.br/downloads/instalar.sh | sudo bash && \
 
 
 echo "========================================" && \
