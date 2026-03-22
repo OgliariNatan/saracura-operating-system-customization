@@ -1,49 +1,147 @@
-# GUIA DE PERSONALIZAÇÃO DA ISO COM CUBIC
-
-## Introdução
-Este guia tem como objetivo fornecer instruções sobre como utilizar o Cubic para personalizar a ISO do Ubuntu 24.04, adaptando-a às necessidades do projeto Saracura OS.
+# Guia de Personalização da ISO com Cubic - Saracura OS
 
 ## O que é o Cubic?
-Cubic (Custom Ubuntu ISO Creator) é uma ferramenta que permite criar uma imagem ISO personalizada do Ubuntu. Com o Cubic, você pode adicionar, remover ou modificar pacotes, alterar configurações do sistema e incluir scripts de inicialização.
+
+Cubic (Custom Ubuntu ISO Creator) é uma ferramenta gráfica que permite criar uma ISO personalizada do Ubuntu. Ele abre um terminal chroot dentro da ISO, onde você pode instalar/remover pacotes e modificar configurações.
 
 ## Pré-requisitos
-Antes de começar, certifique-se de que você possui:
-- Uma instalação do Ubuntu 24.04.
-- O Cubic instalado. Você pode instalá-lo usando o seguinte comando:
-  ```bash
-  sudo apt install cubic
-  ```
 
-## Passo a Passo para Personalização da ISO
+```bash
+sudo apt-add-repository universe
+sudo apt-add-repository ppa:cubic-wizard/release
+sudo apt update
+sudo apt install cubic
+```
 
-### 1. Iniciar o Cubic
-- Abra o Cubic a partir do menu de aplicativos.
-- Selecione a ISO do Ubuntu 24.04 que você deseja personalizar.
+- ISO do Ubuntu 24.04 LTS Desktop (amd64)
+- Pelo menos 20GB de espaço livre em disco
+- Conexão com a internet (para baixar pacotes no chroot)
 
-### 2. Configuração do Projeto
-- Na tela de configuração do projeto, você pode definir o nome do projeto e a descrição. Utilize as informações do projeto Saracura OS.
+## Passo a Passo
 
-### 3. Modificar Pacotes
-- Na seção de gerenciamento de pacotes, você pode adicionar ou remover pacotes conforme necessário. Utilize os scripts `install_programas.sh` e `remove_programas.sh` para gerenciar os programas que serão instalados ou removidos.
+### 1. Abrir o Cubic
 
-### 4. Adicionar Scripts
-- Copie os scripts do diretório `scripts` para a ISO. Isso pode incluir:
-  - `primeiro-login.sh`: Para registrar o patrimônio no primeiro login.
-  - `pos-instalacao.sh`: Para executar tarefas pós-instalação.
+```bash
+sudo cubic
+```
 
-### 5. Configurações do Sistema
-- Modifique os arquivos de configuração no diretório `config` conforme necessário. Isso pode incluir:
-  - `kdeglobals` e `kwinrc` para personalizar o ambiente KDE.
-  - `sddm.conf` para configurar o gerenciador de exibição.
+- Selecione um **diretório de projeto** (ex: `~/cubic-saracura`)
+- Selecione a **ISO do Ubuntu 24.04 LTS Desktop**
+- Clique em **Next**
 
-### 6. Configuração do Autostart
-- Adicione o arquivo `saracura-primeiro-login.desktop` ao diretório de autostart para garantir que o script de registro de patrimônio seja executado na inicialização.
+### 2. Copiar o projeto para dentro do chroot
 
-### 7. Finalizar e Criar a ISO
-- Após realizar todas as modificações, siga as instruções do Cubic para finalizar o processo e criar a nova ISO personalizada.
+O Cubic permite arrastar e soltar arquivos na janela do terminal. Copie todo o projeto para `/tmp/saracura/`:
 
-## Conclusão
-Com o Cubic, você pode facilmente personalizar a ISO do Ubuntu 24.04 para atender às necessidades do Saracura OS. Siga este guia para garantir que todas as etapas sejam seguidas corretamente e que a ISO resultante esteja pronta para uso.
+```bash
+# Dentro do Cubic, crie o diretório
+mkdir -p /tmp/saracura
+```
 
-## Suporte
-Para mais informações ou suporte, consulte a documentação do Cubic ou entre em contato com a equipe do projeto Saracura OS.
+**Arraste as pastas para `/tmp/saracura/` no Cubic:**
+- `scripts/`
+- `config/`
+- `resources/` (contém wallpapers/, bgrt-fallback/, watermark/)
+
+A estrutura dentro do Cubic deve ficar assim:
+```
+/tmp/saracura/
+├── scripts/
+│   ├── remove_programas.sh
+│   ├── install_programas.sh
+│   └── pos-instalacao.sh
+├── config/
+│   ├── autostart/saracura-primeiro-login.desktop
+│   ├── kde/kdeglobals
+│   ├── kde/kwinrc
+│   ├── patrimonio/registrar_patrimonio.sh
+│   ├── sddm/sddm.conf
+│   └── sudoers.d/saracura-patrimonio
+└── resources/
+    ├── bgrt-fallback/bgrt-fallback.png
+    ├── wallpapers/logo_PP_saracura_TROCA.png
+    └── watermark/watermark.png
+```
+
+### 3. Executar os scripts na ordem
+
+```bash
+# 1. Remover programas desnecessários (GNOME, LibreOffice, etc.)
+bash /tmp/saracura/scripts/remove_programas.sh
+
+# 2. Instalar KDE Plasma + programas
+bash /tmp/saracura/scripts/install_programas.sh
+
+# 3. Pós-instalação (imagens, configurações, branding)
+bash /tmp/saracura/scripts/pos-instalacao.sh /tmp/saracura
+```
+
+### 4. Verificar se tudo foi instalado
+
+```bash
+# Wallpapers
+ls -la /usr/share/backgrounds/saracura/
+
+# Tela de boot (Plymouth)
+ls -la /usr/share/plymouth/themes/spinner/bgrt-fallback.png
+
+# Watermark na tela de login (SDDM)
+ls -la /usr/share/sddm/themes/breeze/watermark.png
+
+# Script de patrimônio
+ls -la /usr/local/bin/registrar_patrimonio.sh
+
+# Autostart
+ls -la /etc/xdg/autostart/saracura-primeiro-login.desktop
+
+# Configurações KDE para novos usuários
+ls -la /etc/skel/.config/kdeglobals
+ls -la /etc/skel/.config/kwinrc
+
+# Branding
+cat /etc/os-release
+cat /etc/saracura/release
+```
+
+### 5. Finalizar no Cubic
+
+- Clique em **Next**
+- Na tela de **Packages**, remova pacotes extras se desejar
+- Clique em **Next**
+- Na tela de boot, altere "Ubuntu" para "Saracura OS" se desejado
+- Clique em **Generate** para criar a ISO
+
+### 6. Gravar no Pendrive
+
+```bash
+# Substitua /dev/sdX pelo seu dispositivo USB
+sudo dd if=~/cubic-saracura/saracura-os-1.0-amd64.iso of=/dev/sdX bs=4M status=progress sync
+```
+
+## Onde cada imagem aparece
+
+| Recurso | Origem no projeto | Destino no sistema | Quando aparece |
+|---|---|---|---|
+| **bgrt-fallback** | `resources/bgrt-fallback/` | `/usr/share/plymouth/themes/spinner/bgrt-fallback.png` | **Boot** (logo Plymouth) |
+| **wallpapers** | `resources/wallpapers/` | `/usr/share/backgrounds/saracura/` | **Área de trabalho** KDE |
+| **watermark** | `resources/watermark/` | `/usr/share/sddm/themes/breeze/watermark.png` | **Tela de login** SDDM |
+
+## Tamanhos recomendados das imagens
+
+| Imagem | Tamanho recomendado | Formato |
+|---|---|---|
+| bgrt-fallback | 300x300 px (centralizado) | PNG |
+| wallpaper | 1920x1080 px (ou 4K) | PNG ou JPG |
+| watermark | 200x50 px (logo pequeno) | PNG com transparência |
+
+## Fluxo após a instalação
+
+```
+Boot → bgrt-fallback (Plymouth)
+  ↓
+Login → watermark + wallpaper (SDDM)
+  ↓
+Primeiro login → kdialog pede nº de patrimônio
+  ↓
+Área de trabalho → wallpaper + configs KDE
+```

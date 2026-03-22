@@ -1,23 +1,42 @@
-[General]
-activeDesktop=KDE
-focusPolicy=clickToFocus
-desktopEffects=enabled
-animationDuration=250
-animationSpeed=normal
+## Configurações do KWin - Saracura OS
+## Copiar para /etc/skel/.config/kwinrc
 
 [Compositing]
-enabled=true
-method=OpenGL
-backend=OpenGL2
-vsync=false
+Backend=OpenGL
+Enabled=true
+GLCore=true
+GLPreferBufferSwap=a
+GLTextureFilter=1
+HiddenPreviews=5
+OpenGLIsUnsafe=false
+WindowsBlockCompositing=true
+XRenderSmoothScale=false
 
-[General]
-theme=Saracura
-borderlessMaximizedWindows=false
-maximizeOnDoubleClick=true
-minimizeOnDoubleClick=false
+[Desktops]
+Id_1=default
+Number=1
+Rows=1
 
-[Shortcuts]
-# Define custom shortcuts here
-# Example: 
-# Meta+T=ShowDesktop
+[Effect-Overview]
+BorderActivate=9
+
+[NightColor]
+Active=true
+Mode=Automatic
+
+[org.kde.kdecoration2]
+BorderSize=Normal
+BorderSizeAuto=false
+ButtonsOnLeft=MS
+ButtonsOnRight=HIAX
+library=org.kde.breeze
+theme=Breeze
+
+[Windows]
+BorderlessMaximizedWindows=false
+FocusPolicy=ClickToFocus
+Placement=Smart
+
+[MouseBindings]
+CommandAllKey=Meta
+CommandAllWheel=Nothing

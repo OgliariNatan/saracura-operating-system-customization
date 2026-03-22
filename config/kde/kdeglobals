@@ -1,10 +1,27 @@
-[Desktop Entry]
-Type=Application
-Name=Saracura OS - Primeiro Login
-Comment=Registra o número de patrimônio no primeiro uso do equipamento
-Exec=/usr/local/bin/registrar_patrimonio.sh
-Icon=preferences-system
-Terminal=false
-X-KDE-autostart-phase=2
-X-KDE-autostart-after=panel
-OnlyShowIn=KDE;
+## Configurações globais do KDE - Saracura OS
+## Copiar para /etc/skel/.config/kdeglobals
+
+[General]
+Name=Saracura OS
+ColorScheme=BreezeLight
+fixed=Monospace,10,-1,5,50,0,0,0,0,0
+font=Noto Sans,10,-1,5,50,0,0,0,0,0
+menuFont=Noto Sans,10,-1,5,50,0,0,0,0,0
+smallestReadableFont=Noto Sans,8,-1,5,50,0,0,0,0,0
+toolBarFont=Noto Sans,10,-1,5,50,0,0,0,0,0
+
+[KDE]
+LookAndFeelPackage=org.kde.breeze.desktop
+SingleClick=false
+AnimationDurationFactor=0.5
+
+[Icons]
+Theme=breeze
+
+[WM]
+activeBackground=25,71,120
+activeBlend=255,255,255
+activeForeground=255,255,255
+inactiveBackground=49,54,59
+inactiveBlend=75,71,67
+inactiveForeground=189,195,199

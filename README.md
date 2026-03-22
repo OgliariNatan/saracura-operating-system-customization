@@ -1,69 +1,89 @@
-# Saracura Operating System Customization
+# Saracura OS - Customização de ISO Ubuntu 24.04
 
-Este projeto tem como objetivo personalizar a ISO do Ubuntu 24.04, utilizando o Cubic para facilitar a instalação e configuração de um sistema operacional otimizado para os usuários do Saracura OS.
+Projeto de personalização da ISO do Ubuntu 24.04 LTS usando **Cubic**, com ambiente **KDE Plasma**, registro de patrimônio no primeiro login e branding customizado.
 
 ## Estrutura do Projeto
 
-O projeto é organizado da seguinte forma:
+```
+saracura-operating-system-customization/
+├── scripts/                          # Scripts de automação
+│   ├── remove_programas.sh           # Remove GNOME, LibreOffice, etc.
+│   ├── install_programas.sh          # Instala KDE + programas
+│   ├── pos-instalacao.sh             # Copia recursos e configura branding
+│   └── primeiro-login.sh             # Wrapper para registro de patrimônio
+├── config/                           # Arquivos de configuração
+│   ├── autostart/
+│   │   └── saracura-primeiro-login.desktop   # Autostart do KDE
+│   ├── kde/
+│   │   ├── kdeglobals                # Configurações globais do KDE
+│   │   └── kwinrc                    # Configurações do KWin
+│   ├── patrimonio/
+│   │   └── registrar_patrimonio.sh   # Script de registro de patrimônio
+│   ├── sddm/
+│   │   └── sddm.conf                # Configuração do login SDDM
+│   └── sudoers.d/
+│       └── saracura-patrimonio       # Permissões sudo para patrimônio
+├── resources/                        # Recursos visuais
+│   ├── bgrt-fallback/                # Imagem da tela de boot (Plymouth)
+│   ├── wallpapers/                   # Wallpapers da área de trabalho
+│   └── watermark/                    # Marca d'água da tela de login SDDM
+├── cubic/                            # Configuração do Cubic
+│   ├── cubic-project.conf
+│   └── preseed.cfg                   # Automação de instalação
+├── docs/                             # Documentação
+│   ├── GUIA-CUBIC.md                 # Passo a passo com Cubic
+│   ├── LISTA-PROGRAMAS.md            # Programas instalados/removidos
+│   └── CHANGELOG.md                  # Histórico de alterações
+└── README.md
+```
 
-- **scripts/**: Contém scripts para instalação, remoção e configuração do sistema.
-  - `install_programas.sh`: Script para instalar programas básicos e essenciais.
-  - `remove_programas.sh`: Script para remover programas padrão desnecessários.
-  - `primeiro-login.sh`: Script que registra o número de patrimônio no primeiro login do usuário.
-  - `pos-instalacao.sh`: Script para executar tarefas pós-instalação.
+## Recursos Visuais
 
-- **config/**: Contém arquivos de configuração para o sistema.
-  - **patrimonio/**: Scripts e arquivos relacionados ao registro de patrimônio.
-    - `registrar_patrimonio.sh`: Script responsável por registrar o patrimônio do equipamento.
-  - **kde/**: Configurações específicas do ambiente de desktop KDE.
-    - `kdeglobals`: Configurações gerais do KDE.
-    - `kwinrc`: Configurações do gerenciador de janelas KWin.
-  - **autostart/**: Configurações para iniciar scripts automaticamente.
-    - `saracura-primeiro-login.desktop`: Executa o script de registro de patrimônio na inicialização.
-  - **sddm/**: Configurações do gerenciador de exibição SDDM.
-    - `sddm.conf`: Configurações para o SDDM.
-  - **sudoers.d/**: Permissões para execução de comandos sem senha.
-    - `saracura-patrimonio`: Permite execução de comandos específicos com sudo sem senha.
+| Recurso | Pasta | Destino no sistema | Onde aparece |
+|---|---|---|---|
+| **bgrt-fallback** | `resources/bgrt-fallback/` | `/usr/share/plymouth/themes/spinner/bgrt-fallback.png` | Tela de boot |
+| **wallpapers** | `resources/wallpapers/` | `/usr/share/backgrounds/saracura/` | Área de trabalho |
+| **watermark** | `resources/watermark/` | `/usr/share/sddm/themes/breeze/watermark.png` | Tela de login |
 
-- **resources/**: Contém recursos como wallpapers.
-  - **wallpapers/**: Diretório para armazenar wallpapers do sistema.
+## Como Usar (com Cubic)
 
-- **cubic/**: Contém arquivos de configuração do Cubic.
-  - `cubic-project.conf`: Configurações do projeto de personalização da ISO.
-  - `preseed.cfg`: Automatiza a instalação do sistema.
-
-- **docs/**: Documentação do projeto.
-  - `GUIA-CUBIC.md`: Guia sobre como usar o Cubic.
-  - `LISTA-PROGRAMAS.md`: Lista de programas a serem instalados ou removidos.
-  - `CHANGELOG.md`: Histórico de alterações do projeto.
-
-- **.gitignore**: Arquivo para especificar arquivos a serem ignorados pelo Git.
-
-- **LICENSE**: Licença do projeto.
-
-## Como Usar
-
-1. **Clone o repositório**: 
+1. Instale o Cubic:
+   ```bash
+   sudo apt-add-repository ppa:cubic-wizard/release
+   sudo apt update && sudo apt install cubic
    ```
-   git clone <URL do repositório>
-   cd saracura-operating-system-customization
+
+2. Abra o Cubic e selecione a ISO do Ubuntu 24.04 LTS.
+
+3. No terminal chroot do Cubic, copie o projeto para `/tmp/saracura/` e execute:
+   ```bash
+   bash /tmp/saracura/scripts/remove_programas.sh
+   bash /tmp/saracura/scripts/install_programas.sh
+   bash /tmp/saracura/scripts/pos-instalacao.sh /tmp/saracura
    ```
 
-2. **Execute o script de instalação**:
-   ```
-   sudo bash scripts/install_programas.sh
-   ```
+4. Finalize e gere a ISO pelo Cubic.
 
-3. **Personalize a ISO com o Cubic**:
-   - Abra o Cubic e selecione a ISO do Ubuntu 24.04.
-   - Siga as instruções do guia `docs/GUIDE-CUBIC.md` para personalizar a ISO conforme suas necessidades.
+Para instruções detalhadas, consulte `docs/GUIA-CUBIC.md`.
 
-4. **Reinicie o sistema após a instalação** para aplicar as mudanças.
+## Primeiro Login
 
-## Contribuições
+No primeiro login do usuário, uma janela (kdialog) solicita o **número de patrimônio** do equipamento. As informações coletadas (patrimônio, hostname, MAC, serial, etc.) são salvas em `/etc/saracura/patrimonio.conf`.
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests para melhorias e correções.
+## Programas Instalados
+
+- **Desktop:** KDE Plasma + SDDM
+- **Escritório:** OnlyOffice
+- **Navegador:** Google Chrome
+- **Multimídia:** VLC, GIMP
+- **Educação:** TuxPaint
+- **Acesso remoto:** AnyDesk
+- **Comunicação:** Zoom
+- **Governo:** Assinador Digital SERPRO
+- **Utilitários:** wget, curl, htop, net-tools, SSH
+- **Impressoras:** Drivers genéricos + HP
+- **Java:** JRE + JDK
 
 ## Licença
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+Este projeto está licenciado sob a [Licença Apache 2.0](COPYING.APACHE).

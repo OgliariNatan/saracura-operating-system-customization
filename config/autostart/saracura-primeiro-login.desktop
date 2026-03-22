@@ -1,7 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=Registrar Patrimônio
-Comment=Executa o script de registro de patrimônio no primeiro login do usuário
+Name=Saracura OS - Registro de Patrimônio
+Comment=Registra o número de patrimônio no primeiro uso do equipamento
 Exec=/usr/local/bin/registrar_patrimonio.sh
-X-GNOME-Autostart-enabled=true
+Icon=preferences-system
+Terminal=false
+X-KDE-autostart-phase=2
+X-KDE-autostart-after=panel
 OnlyShowIn=KDE;
