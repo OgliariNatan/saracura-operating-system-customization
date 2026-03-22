@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Registrar Patrimônio
+Comment=Executa o script de registro de patrimônio no primeiro login do usuário
+Exec=/usr/local/bin/registrar_patrimonio.sh
+X-GNOME-Autostart-enabled=true
+OnlyShowIn=KDE;

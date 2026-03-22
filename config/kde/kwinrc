@@ -1,0 +1,23 @@
+[General]
+activeDesktop=KDE
+focusPolicy=clickToFocus
+desktopEffects=enabled
+animationDuration=250
+animationSpeed=normal
+
+[Compositing]
+enabled=true
+method=OpenGL
+backend=OpenGL2
+vsync=false
+
+[General]
+theme=Saracura
+borderlessMaximizedWindows=false
+maximizeOnDoubleClick=true
+minimizeOnDoubleClick=false
+
+[Shortcuts]
+# Define custom shortcuts here
+# Example: 
+# Meta+T=ShowDesktop

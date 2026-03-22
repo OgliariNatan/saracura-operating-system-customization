@@ -1,0 +1,6 @@
+# Permite registro de patrimônio sem senha
+ALL ALL=(root) NOPASSWD: /usr/bin/mkdir -p /etc/saracura
+ALL ALL=(root) NOPASSWD: /usr/bin/tee /etc/saracura/patrimonio.conf
+ALL ALL=(root) NOPASSWD: /usr/bin/hostnamectl set-hostname *
+ALL ALL=(root) NOPASSWD: /usr/bin/dmidecode *
+ALL ALL=(root) NOPASSWD: /usr/bin/sed -i * /etc/hosts

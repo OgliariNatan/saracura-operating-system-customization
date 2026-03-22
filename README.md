@@ -1,215 +1,69 @@
 # Saracura Operating System Customization
 
-Personalização customizada do Ubuntu 24.04 LTS usando Cubic para criar uma ISO com aplicações e configurações personalizadas.
+Este projeto tem como objetivo personalizar a ISO do Ubuntu 24.04, utilizando o Cubic para facilitar a instalação e configuração de um sistema operacional otimizado para os usuários do Saracura OS.
 
-No mais a mais, digo que é um processo datalhista e demorado. Possui inúmeras formas de chegar a um denominador comum, estes passos em sua grande maioria são a subistituição de arquivos mantendo os nomes dos originais, acredito que não seria a melhor maneira levando em considerações conhecementos sobre o sistema operacional, o ideal seria manter os originais e adicionar os customizados e alterar os arquivos de configurações, no entanto, é complexo e sensível a erros.
-Ressalto que as aplicações não estão visiveis na instalação do sistema, será aplicado após a reinicialização, pois houve algumas mudanção no Ubuntu e supostamente a equipe do CUBIC ainda não ajustou.
-Irei configurar o ambiente KDE Plasma, em vez do tradicional GNOME.
+## Estrutura do Projeto
 
-## 📋 Índice
+O projeto é organizado da seguinte forma:
 
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação do Cubic](#instalação-do-cubic)
-- [Processo de Customização](#processo-de-customização)
-- [Remoção de Aplicações](#remoção-de-aplicações)
-- [Instalação de Aplicações](#instalação-de-aplicações)
-- [Personalização Visual](#personalização-visual)
-- [Configuração do Dock](#configuração-do-dock)
-- [Autostart de Personalizações](#autostart-de-personalizações)
-- [Geração da ISO](#geração-da-iso)
+- **scripts/**: Contém scripts para instalação, remoção e configuração do sistema.
+  - `install_programas.sh`: Script para instalar programas básicos e essenciais.
+  - `remove_programas.sh`: Script para remover programas padrão desnecessários.
+  - `primeiro-login.sh`: Script que registra o número de patrimônio no primeiro login do usuário.
+  - `pos-instalacao.sh`: Script para executar tarefas pós-instalação.
 
+- **config/**: Contém arquivos de configuração para o sistema.
+  - **patrimonio/**: Scripts e arquivos relacionados ao registro de patrimônio.
+    - `registrar_patrimonio.sh`: Script responsável por registrar o patrimônio do equipamento.
+  - **kde/**: Configurações específicas do ambiente de desktop KDE.
+    - `kdeglobals`: Configurações gerais do KDE.
+    - `kwinrc`: Configurações do gerenciador de janelas KWin.
+  - **autostart/**: Configurações para iniciar scripts automaticamente.
+    - `saracura-primeiro-login.desktop`: Executa o script de registro de patrimônio na inicialização.
+  - **sddm/**: Configurações do gerenciador de exibição SDDM.
+    - `sddm.conf`: Configurações para o SDDM.
+  - **sudoers.d/**: Permissões para execução de comandos sem senha.
+    - `saracura-patrimonio`: Permite execução de comandos específicos com sudo sem senha.
 
-## 📦 Instalação do Cubic
+- **resources/**: Contém recursos como wallpapers.
+  - **wallpapers/**: Diretório para armazenar wallpapers do sistema.
 
-```bash
-sudo apt-add-repository universe
-sudo apt-add-repository ppa:cubic-wizard/release
-sudo apt update
-sudo apt install --no-install-recommends cubic
-```
+- **cubic/**: Contém arquivos de configuração do Cubic.
+  - `cubic-project.conf`: Configurações do projeto de personalização da ISO.
+  - `preseed.cfg`: Automatiza a instalação do sistema.
 
-## 🚀 Processo de Customização
+- **docs/**: Documentação do projeto.
+  - `GUIA-CUBIC.md`: Guia sobre como usar o Cubic.
+  - `LISTA-PROGRAMAS.md`: Lista de programas a serem instalados ou removidos.
+  - `CHANGELOG.md`: Histórico de alterações do projeto.
 
-### 1. ISO Ubuntu 24.04
-   Baixe a iso do Ubuntu 24.04
+- **.gitignore**: Arquivo para especificar arquivos a serem ignorados pelo Git.
 
-### 2. Iniciar o Cubic
+- **LICENSE**: Licença do projeto.
 
-1. Abra o Cubic
-2. Selecione a ISO original do Ubuntu 24.04
-3. Escolha um diretório de trabalho
-4. Aguarde a extração dos arquivos
+## Como Usar
 
-### 3. Entrar no Ambiente Chroot
+1. **Clone o repositório**: 
+   ```
+   git clone <URL do repositório>
+   cd saracura-operating-system-customization
+   ```
 
-Quando o terminal do Cubic abrir, você estará dentro do ambiente chroot da ISO.
+2. **Execute o script de instalação**:
+   ```
+   sudo bash scripts/install_programas.sh
+   ```
 
-#### Atualize o OS
+3. **Personalize a ISO com o Cubic**:
+   - Abra o Cubic e selecione a ISO do Ubuntu 24.04.
+   - Siga as instruções do guia `docs/GUIDE-CUBIC.md` para personalizar a ISO conforme suas necessidades.
 
-```bash
-chmod +x /root/atualiza.sh && \
-/root/./atualiza.sh
-```
+4. **Reinicie o sistema após a instalação** para aplicar as mudanças.
 
-#### 🗑️ Remoção de Aplicações
-Para remover aplicações rode o scripty **remove_programas.sh**
+## Contribuições
 
-```bash
-chmod +x /root/remove_programas.sh && \
-/root/./remove_programas.sh
-```
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests para melhorias e correções.
 
-atualize o OS
-```bash
-/root/./atualiza.sh
-```
+## Licença
 
-
-#### 📥 Instalação de Aplicações
-
-##### 3.1. Atualizar Sistema
-
-```bash
-/root/./atualiza.sh
-```
-
-##### 3.2. 🚨 Para instalar app's rode o scripty
-
-```bash
-chmod +x /root/install_programas.sh && \
-/root/./install_programas.sh
-```
-
-## 🎨 Personalização Visual
-
-### Logo de Inicialização (Plymouth)
-
-1. Copie sua imagem de logo para `/usr/share/plymouth/themes/spinner/`
-2. Substitua o arquivo watermark.png
-
-```bash
-
-# Copie seu logo personalizado
-cp /root/logo.png /usr/share/plymouth/themes/spinner/watermark.png
-
-# Atualize o initramfs
-update-initramfs -u
-```
-
-### Papel de Parede
-
-Copie o papel de parede personalizado para o diretório de wallpapers:
-
-```bash
-# Criar diretório se necessário
-mkdir -p /usr/share/backgrounds/saracura/
-
-# Copiar papel de parede
-cp /caminho/para/wallpaper.jpg /usr/share/backgrounds/saracura/wallpaper.jpg
-
-```
-
-Exemplo: 
-
-```xml
-   
-   .....
-   <wallpaper>
-     <name>Ogliari</name>
-     <filename>/usr/share/backgrounds/logo_cinza.png</filename>
-     <options>zoom</options>
-     <pcolor>#000000</pcolor>
-     <scolor>#000000</scolor>
-     <shade_type>solid</shade_type>
-   </wallpaper>
-</wallpapers>
-``` 
-
-
-Adicionar o papel de parede as arquivo ``` /usr/share/gnome-background-properties/noble-wallpapers.xml``` 
-
-
-### Configuração será aplicada automaticamente
-
-O papel de parede será definido automaticamente pelo arquivo de autostart configurado na próxima seção.
-
-## 🎯 Configuração do Dock
-
-### Criar Pasta para Configuração Automática
-
-```bash
-mkdir -p /etc/skel/.config/autostart/
-```
-
-### Criar Arquivo de Configuração
-
-```bash
-nano /etc/skel/.config/autostart/personalizacoes-saracura.desktop
-```
-
-Cole o conteúdo do arquivo [personalizacoes-saracura.desktop](personalizacoes-saracura.desktop).
-
-### Configurações do Dock via gsettings
-
-As configurações do dock serão aplicadas automaticamente através do arquivo de autostart `personalizacoes-saracura.desktop`:
-
-`
-
-## 📁 Estrutura de Arquivos
-
-```
-/etc/skel/.config/autostart/
-└── personalizacoes-saracura.desktop
-
-/usr/share/backgrounds/saracura/
-└── wallpaper.jpg
-
-/usr/share/plymouth/themes/spinner/
-└── watermark.png
-```
-
-## Linguagem padrão 
-
-altere o arquivo ``` /etc/default/locale ```
-``` bash
-LANG=pt_BR.UTF-8
-```
-
-## 🏁 Geração da ISO
-
-1. No Cubic, após todas as personalizações, clique em "Next"
-2. Configure as informações da ISO:
-   - Nome: Saracura OS
-   - Versão: <Escolha_uma>
-   - Descrição personalizada
-3. Gere a ISO
-4. Teste a ISO em máquina virtual antes de usar em produção
-
-## ✅ Checklist de Verificação
-
-- [x] LibreOffice removido
-- [x] OnlyOffice instalado
-- [x] GIMP instalado
-- [ ] Spotify instalado
-- [x] Google Chrome instalado
-- [ ] AnyDesk instalado
-- [x] Logo de inicialização personalizado
-- [ ] Papel de parede configurado
-- [ ] Dock posicionado corretamente
-- [ ] Autostart configurado
-- [ ] ISO gerada e testada
-
-## 📝 Notas Importantes
-
-- Todos os comandos devem ser executados dentro do ambiente chroot do Cubic
-- As configurações em `/etc/skel/` serão aplicadas a novos usuários criados
-- Teste a ISO em máquina virtual antes de distribuir
-- Mantenha backup da ISO original
-
-## 📄 Licença
-
-Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## 🤝 Contribuições
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+Este projeto está licenciado sob a [Licença MIT](LICENSE).

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Saracura OS - Primeiro Login
+Comment=Registra o número de patrimônio no primeiro uso do equipamento
+Exec=/usr/local/bin/registrar_patrimonio.sh
+Icon=preferences-system
+Terminal=false
+X-KDE-autostart-phase=2
+X-KDE-autostart-after=panel
+OnlyShowIn=KDE;
